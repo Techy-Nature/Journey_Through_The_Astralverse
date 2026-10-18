@@ -1,0 +1,77 @@
+.portrait-color-menu {
+    display: grid;
+    gap: 1rem;
+    max-width: 42rem;
+    padding: 1rem;
+    border: 1px solid currentColor;
+    border-radius: 0.75rem;
+    background: color-mix(in srgb, Canvas 94%, transparent);
+}
+
+.portrait-color-menu h3,
+.portrait-color-menu p {
+    margin: 0;
+}
+
+.portrait-color-control {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+    gap: 0.75rem;
+    margin: 0;
+    padding: 0.8rem;
+    border: 1px solid color-mix(in srgb, currentColor 35%, transparent);
+    border-radius: 0.5rem;
+}
+
+.portrait-color-control legend {
+    padding: 0 0.35rem;
+    font-weight: 700;
+}
+
+.portrait-color-control label {
+    display: grid;
+    gap: 0.3rem;
+}
+
+.portrait-color-control select,
+.portrait-color-control input[type="text"],
+.portrait-color-reset {
+    min-height: 2.5rem;
+    padding: 0.45rem 0.6rem;
+    color: inherit;
+    border: 1px solid currentColor;
+    border-radius: 0.35rem;
+    background: Canvas;
+}
+
+.portrait-custom-color {
+    display: grid;
+    grid-template-columns: auto minmax(8rem, 1fr);
+    gap: 0.75rem;
+    align-items: end;
+}
+
+.portrait-custom-color[hidden] {
+    display: none;
+}
+
+.portrait-custom-color input[type="color"] {
+    width: 4rem;
+    min-height: 2.5rem;
+    padding: 0.15rem;
+    border: 1px solid currentColor;
+    border-radius: 0.35rem;
+    background: Canvas;
+    cursor: pointer;
+}
+
+.portrait-color-reset {
+    justify-self: start;
+    cursor: pointer;
+}
+
+.portrait-color-status {
+    min-height: 1.4em;
+    opacity: 0.85;
+}
+
