@@ -1,0 +1,18 @@
+:: StoryInit
+
+<<set $p to {
+HP: 10,
+MP: 30,
+muscular: false
+}>>
+<<set $cel to {
+HP: 30,
+MP: 60
+}>>
+
+<<set $p.eyes to {
+color: ""
+}
+<<set $p.hair to {
+color: ""
+}
