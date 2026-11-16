@@ -13,10 +13,10 @@ on:
 
 env:
   APP_NAME: Journey Into The Astralscapes
-  APP_ID: io.github.techynature.astralscapes
-  STORY_PATH: src          # file or folder Tweego compiles
-  ASSETS_PATH: ""          # optional folder of images/audio, e.g. media
-  ICON: ""                 # optional square PNG, e.g. media/icon.png
+  APP_ID: io.github.techynature.JITA
+  STORY_PATH: "src"          # file or folder Tweego compiles
+  ASSETS_PATH: "media"          # optional folder of images/audio, e.g. media
+  ICON: "media/icon/icon-source.png"                 # optional square PNG, e.g. media/icon.png
   VERSION_PREFIX: "1.0"
   DUPLEX_REF: main
 

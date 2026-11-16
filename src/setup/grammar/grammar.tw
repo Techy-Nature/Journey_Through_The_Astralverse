@@ -1,0 +1,670 @@
+:: head [grammar]
+
+head
+skull
+cranium
+noggin
+crown
+pate
+
+:: hair [grammar]
+
+hair
+locks
+tresses
+mane
+strands
+curls
+mop
+
+:: face [grammar]
+
+face
+features
+visage
+countenance
+mug
+expression
+
+:: forehead [grammar]
+
+forehead
+brow
+temple
+upper-face
+
+:: eyes [grammar]
+
+eyes
+peepers
+orbs
+gaze
+pupils
+eyeballs
+irises
+
+:: eyelashes [grammar]
+
+eyelashes
+lashes
+cilia
+eye-fringe
+
+:: eyebrows [grammar]
+
+eyebrows
+brows
+brow-line
+arches
+
+:: ears [grammar]
+
+ears
+earlobes
+auricles
+lugholes
+hearing-organs
+
+:: nose [grammar]
+
+nose
+snout
+schnoz
+nostrils
+beak
+sniffer
+
+:: mouth [grammar]
+
+mouth
+maw
+jaws
+kisser
+trap
+gob
+muzzle
+
+:: lips [grammar]
+
+lips
+lip-line
+kisser
+pout
+smackers
+mouth-edges
+
+:: tongue [grammar]
+
+tongue
+lingua
+taste-muscle
+licker
+
+:: teeth [grammar]
+
+teeth
+fangs
+chompers
+pearly-whites
+dentition
+molars
+incisors
+
+:: jaw [grammar]
+
+jaw
+jawline
+mandible
+chin-line
+jawbone
+
+:: chin [grammar]
+
+chin
+jaw-point
+mentum
+lower-jaw
+
+:: cheeks [grammar]
+
+cheeks
+cheekbones
+jowls
+face-sides
+chops
+
+:: neck [grammar]
+
+neck
+throat
+nape
+scruff
+gullet
+collar-line
+
+:: throat [grammar]
+
+throat
+gullet
+windpipe
+larynx
+voice-box
+esophagus
+
+:: shoulders [grammar]
+
+shoulders
+shoulder-blades
+deltoids
+delts
+upper-back
+scapulae
+
+:: arms [grammar]
+
+arms
+upper-limbs
+forelimbs
+biceps
+triceps
+limbs
+
+:: elbows [grammar]
+
+elbows
+elbow-joints
+arm-bends
+funny-bones
+
+:: wrists [grammar]
+
+wrists
+wrist-joints
+carpus
+forearm-ends
+
+:: hands [grammar]
+
+hands
+palms
+mitts
+paws
+fists
+grips
+digits
+
+:: palms [grammar]
+
+palms
+hand-flats
+inner-hands
+open-hands
+
+:: fingers [grammar]
+
+fingers
+phalanges
+fingernails
+finger-tips
+hand extremities
+digits
+
+:: fingernails [grammar]
+
+fingernails
+nails
+nail-tips
+talons
+claw-tips
+
+:: knuckles [grammar]
+
+knuckles
+finger-joints
+knucks
+fist-ridges
+
+:: thumbs [grammar]
+
+thumbs
+opposable-digits
+pollex
+thumb-tips
+
+:: chest [grammar]
+
+chest
+breast
+torso
+sternum
+ribcage
+pecs
+bosom
+
+:: back [grammar]
+
+back
+spine
+backside
+dorsum
+shoulder-blades
+lower-back
+
+:: spine [grammar]
+
+spine
+backbone
+vertebrae
+spinal-column
+back-ridge
+
+:: ribs [grammar]
+
+ribs
+ribcage
+rib-bones
+sides
+flanks
+
+:: stomach [grammar]
+
+stomach
+belly
+tummy
+gut
+midsection
+abdomen
+middle
+
+:: abs [grammar]
+
+abs
+abdominals
+six-pack
+core
+stomach-muscles
+washboard
+
+:: waist [grammar]
+
+waist
+waistline
+midriff
+middle
+
+:: hips [grammar]
+
+hips
+hipbones
+haunches
+pelvis
+hip-curves
+flanks
+
+:: sides [grammar]
+
+sides
+flanks
+ribs
+love-handles
+waist
+
+:: legs [grammar]
+
+legs
+limbs
+pins
+gams
+hind-limbs
+lower-limbs
+
+:: thighs [grammar]
+
+thighs
+upper-legs
+haunches
+thigh-muscles
+quads
+
+:: knees [grammar]
+
+knees
+kneecaps
+patellae
+knee-joints
+leg-bends
+
+:: calves [grammar]
+
+calves
+lower-legs
+calf-muscles
+shins
+
+:: shins [grammar]
+
+shins
+shinbones
+tibias
+lower-legs
+leg-fronts
+
+:: ankles [grammar]
+
+ankles
+ankle-joints
+talus
+foot-joints
+
+:: feet [grammar]
+
+feet
+soles
+tootsies
+paws
+hooves
+hind-feet
+trotters
+
+:: toes [grammar]
+
+toes
+tootsies
+piggies
+foot-digits
+toe-tips
+
+:: heels [grammar]
+
+heels
+foot-backs
+calcaneus
+heel-bones
+
+:: soles [grammar]
+
+soles
+foot-pads
+underfeet
+foot-bottoms
+pads
+
+:: skin [grammar]
+
+skin
+flesh
+hide
+dermis
+complexion
+epidermis
+
+:: muscles [grammar]
+
+muscles
+brawn
+sinew
+thews
+beef
+musculature
+strength
+
+:: bones [grammar]
+
+bones
+skeleton
+frame
+osseous-frame
+bony-structure
+
+:: veins [grammar]
+
+veins
+blood-vessels
+arteries
+capillaries
+vessels
+
+:: blood [grammar]
+
+blood
+lifeblood
+gore
+vitae
+life-essence
+claret
+
+:: heart [grammar]
+
+heart
+ticker
+chest-core
+cardiac-muscle
+pulse
+
+:: lungs [grammar]
+
+lungs
+breath
+air-sacs
+bellows
+chest-cavity
+
+:: body [grammar]
+
+body
+form
+frame
+figure
+physique
+build
+shape
+flesh
+
+:: figure [grammar]
+
+figure
+silhouette
+outline
+form
+shape
+contours
+
+:: fur [grammar]
+
+fur
+pelt
+coat
+hide
+fleece
+fluff
+ruff
+
+:: pelt [grammar]
+
+pelt
+fur
+coat
+hide
+skin
+fleece
+
+:: mane [grammar]
+
+mane
+ruff
+scruff
+hackles
+neck-fur
+locks
+
+:: scales [grammar]
+
+scales
+plating
+scutes
+armor-skin
+scaled-hide
+
+:: feathers [grammar]
+
+feathers
+plumage
+plumes
+down
+quills
+
+:: wings [grammar]
+
+wings
+pinions
+wingspan
+flight-limbs
+sails
+vanes
+
+:: tail [grammar]
+
+tail
+brush
+appendage
+tail-end
+rudder
+plume
+
+:: claws [grammar]
+
+claws
+talons
+nails
+hooks
+unguals
+razors
+
+:: paws [grammar]
+
+paws
+pads
+mitts
+forepaws
+toe-beans
+feet
+
+:: muzzle [grammar]
+
+muzzle
+snout
+maw
+nose
+face
+jaws
+
+:: snout [grammar]
+
+snout
+muzzle
+nose
+schnoz
+sniffer
+beak
+
+:: fangs [grammar]
+
+fangs
+canines
+teeth
+eye-teeth
+tusks
+incisors
+
+:: horns [grammar]
+
+horns
+antlers
+spikes
+prongs
+crown-points
+
+:: whiskers [grammar]
+
+whiskers
+vibrissae
+feelers
+bristles
+sensory-hairs
+
+:: hackles [grammar]
+
+hackles
+ruff
+scruff
+back-fur
+neck-fur
+
+:: haunches [grammar]
+
+haunches
+hindquarters
+flanks
+hips
+rump
+
+:: flanks [grammar]
+
+flanks
+sides
+ribs
+haunches
+loins
+
+:: scruff [grammar]
+
+scruff
+nape
+neck-fur
+back-of-the-neck
+ruff
+
+:: breath [grammar]
+
+breath
+exhale
+sigh
+gasp
+wind
+respiration
+
+:: voice [grammar]
+
+voice
+tone
+timbre
+speech
+utterance
+cadence
+
+:: scent [grammar]
+
+scent
+smell
+aroma
+musk
+odor
+fragrance
+bouquet
+
+:: sweat [grammar]
+
+sweat
+perspiration
+moisture
+sheen
+glow
+dampness
+
+:: tears [grammar]
+
+tears
+teardrops
+weeping
+moisture
+crying
