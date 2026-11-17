@@ -1,5 +1,7 @@
 :: StoryInit
 
+<<run setup.adult.apply()>>
+
 <<set $p to {
 HP: 10,
 MP: 30,
@@ -16,3 +18,10 @@ color: ""
 <<set $p.hair to {
 color: ""
 }
+
+:: Start [menu]
+
+<<button "Disclaimers">><<run UI.alert("This is an adult game intended to be played by adults- that said, you can skip the content that is for adults if you are younger than 18 using the skip button and content settings as is appropriate. Summaries are usually given as needed, so you don't lose the essence of what happened nor what was said.")>><</button>>
+{{Start|Crossover}}
+{{About}}
+<<button "Settings">><<run UI.settings()>><</link>>

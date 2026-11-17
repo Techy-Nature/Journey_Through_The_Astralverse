@@ -111,11 +111,6 @@ document.addEventListener('change', function (event) {
 });
 
 
-
-:: StoryInit
-<<run setup.adult.apply()>>
-
-
 :: Adult widgets [widget]
 <<widget "adult" container>><<if setup.adult.on()>>_contents<</if>><</widget>>
 <<widget "notadult" container>><<if !setup.adult.on()>>_contents<</if>><</widget>>
