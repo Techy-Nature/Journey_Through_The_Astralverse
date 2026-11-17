@@ -1,0 +1,161 @@
+:: Story JavaScript [script]
+/* ============================================================
+   Adult-content setting for Duplex
+   - remembers the reader's choice in this browser (not in saves)
+   - shows an age check the first time the story opens
+   - auto-skips [sex]-tagged passages while adult content is off
+   - swaps [grammar nsfw] word lists for their "-safe" twins
+   ============================================================ */
+setup.adult = (function () {
+  'use strict';
+
+  /* ---------- Settings you can change ---------- */
+  var AGE_CHECK_PASSAGE = 'Age Check';   // passage shown on first launch
+  var ADULT_TAGS = ['sex'];              // content tags hidden when adult content is off
+  var NSFW_GRAMMAR_TAG = 'nsfw';         // extra tag on adult [grammar] lists
+  var SAFE_SUFFIX = '-safe';             // "wet" falls back to "wet-safe"
+
+  /* ---------- Storage (one entry per story, keyed by IFID) ---------- */
+  var storyData = document.querySelector('tw-storydata');
+  var KEY = 'duplex-adult:' + ((storyData && (storyData.getAttribute('ifid') || storyData.getAttribute('name'))) || 'story');
+
+  function read() {
+    try { return JSON.parse(localStorage.getItem(KEY) || 'null'); }
+    catch (error) { return null; }
+  }
+  function write(value) {
+    try {
+      if (value === null) localStorage.removeItem(KEY);
+      else localStorage.setItem(KEY, JSON.stringify(value));
+    } catch (error) { /* private browsing: the choice lasts until the tab closes */ }
+    memory = value;
+  }
+  var memory = read();
+
+  /* ---------- First launch: open on the age check instead of Start ---------- */
+  var realStart = storyData ? storyData.getAttribute('startnode') : null;
+  function useAgeCheckAsStart(on) {
+    if (!storyData) return;
+    var gate = document.querySelector('tw-passagedata[name="' + AGE_CHECK_PASSAGE + '"]');
+    if (on && gate) storyData.setAttribute('startnode', gate.getAttribute('pid'));
+    else if (realStart) storyData.setAttribute('startnode', realStart);
+  }
+  useAgeCheckAsStart(memory === null);
+
+  /* ---------- Grammar list swapping ---------- */
+  var originals = {};
+  function swapGrammar(adultOn) {
+    if (!window.Grammar || !window.Duplex) return;
+    Grammar.names().forEach(function (name) {
+      if (Duplex.tags(name).indexOf(NSFW_GRAMMAR_TAG) === -1) return;
+      if (!originals[name]) originals[name] = Grammar.list(name);
+      var safe = name + SAFE_SUFFIX;
+      var options = adultOn ? originals[name]
+        : (Grammar.has(safe) ? Grammar.list(safe) : []);
+      Grammar.define(name, options);
+    });
+  }
+
+  /* ---------- Public API: setup.adult.* ---------- */
+  var api = {
+    /** true once the reader has answered the age check */
+    chosen: function () { return memory !== null; },
+    /** true when adult content should be shown */
+    on: function () { return !!(memory && memory.adult && !memory.minor); },
+    /** true when the reader said they are under 18 */
+    minor: function () { return !!(memory && memory.minor); },
+
+    /** Answer from the age check. */
+    answer: function (isAdult, showAdult) {
+      write({ adult: !!(isAdult && showAdult), minor: !isAdult });
+      useAgeCheckAsStart(false);
+      api.apply();
+    },
+    /** Turn adult content on or off (ignored for readers under 18). */
+    set: function (showAdult) {
+      if (api.minor()) showAdult = false;
+      write({ adult: !!showAdult, minor: api.minor() });
+      api.apply();
+    },
+    /** Forget the answer, so the age check shows on the next restart. */
+    reset: function () {
+      write(null);
+      useAgeCheckAsStart(true);
+      api.apply();
+    },
+    /** Push the current choice into content skipping and grammar lists. */
+    apply: function () {
+      var adultOn = api.on();
+      if (window.Duplex && Duplex.skip) {
+        ADULT_TAGS.forEach(function (tag) { Duplex.skip.set(tag, !adultOn); });
+      }
+      // Keep the Settings dialog's own "Sexual content" checkbox in step.
+      ADULT_TAGS.forEach(function (tag) {
+        document.querySelectorAll('[data-duplex-skip-tag="' + tag + '"]').forEach(function (box) {
+          box.checked = !adultOn;
+          box.disabled = api.minor();
+        });
+      });
+      // Lets the stylesheet hide "Show anyway" on adult scenes for under-18 readers.
+      document.documentElement.classList.toggle('adult-minor', api.minor());
+      swapGrammar(adultOn);
+    }
+  };
+  return api;
+})();
+
+/* The Settings toggle: any checkbox inside .adult-toggle */
+document.addEventListener('change', function (event) {
+  var box = event.target.closest && event.target.closest('.adult-toggle input[type="checkbox"]');
+  if (box) setup.adult.set(box.checked);
+});
+
+
+
+:: StoryInit
+<<run setup.adult.apply()>>
+
+
+:: Adult widgets [widget]
+<<widget "adult" container>><<if setup.adult.on()>>_contents<</if>><</widget>>
+<<widget "notadult" container>><<if !setup.adult.on()>>_contents<</if>><</widget>>
+
+
+:: StorySettings
+<div class="adult-settings">
+<h3>Adult content</h3>
+<<if setup.adult.minor()>>
+<p>Adult content is off because you said you are under 18.</p>
+<<else>>
+<<set _adultOn to setup.adult.on()>>
+<label class="adult-toggle"><<checkbox "_adultOn" false true autocheck>> Show adult content</label>
+<p class="adult-note">When this is off, sexual scenes are skipped with a short summary, and adult wording is replaced with milder words. Your choice is remembered on this device.</p>
+<</if>>
+<<run setTimeout(setup.adult.apply, 0)>>
+<<button "Ask my age again">><<run setup.adult.reset()>><<run UI.alert("The age check will appear the next time you restart the story.")>><</button>>
+</div>
+
+
+:: Age Check
+<div class="age-check">
+<h2>Before you begin</h2>
+<p>Journey Into The Astralscapes has optional adult content, including sexual scenes. You can change this later in Settings.</p>
+<p>How old are you?</p>
+<<link "I'm 18 or older. Show adult content." "Start">><<run setup.adult.answer(true, true)>><</link>>
+<<link "I'm 18 or older. Keep adult content off." "Start">><<run setup.adult.answer(true, false)>><</link>>
+<<link "I'm under 18." "Start">><<run setup.adult.answer(false, false)>><</link>>
+</div>
+
+
+:: Story Stylesheet [stylesheet]
+.age-check { max-width: 34em; margin: 2em auto; }
+.age-check a { display: block; margin: .6em 0; padding: .7em 1em;
+  border: 1px solid var(--duplex-border, #3a3f4b); border-radius: 8px; text-decoration: none; }
+.adult-settings { margin-bottom: 1.2em; padding-bottom: 1em;
+  border-bottom: 1px solid var(--duplex-border, #3a3f4b); }
+.adult-settings h3 { margin: 0 0 .5em; }
+.adult-toggle { display: flex; gap: .6em; align-items: center; cursor: pointer; }
+.adult-note { opacity: .75; font-size: .9em; }
+/* Under-18 readers can't reveal skipped adult scenes. */
+html.adult-minor .duplex-content-notice[data-content-tags~="sex"] [data-duplex-reveal] { display: none; }
+
