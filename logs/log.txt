@@ -1,0 +1,2 @@
+9:55:58 PM›BUILDING: git.gay-repos/Journey-Through-the-Astralverse/exports/index.html
+9:56:03 PM›Watch mode started. NesTwee rebuilds whenever a source file changes.

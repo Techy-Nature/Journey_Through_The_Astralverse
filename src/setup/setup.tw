@@ -13,14 +13,17 @@ MP: 60
 }>>
 
 <<speaker "Celeste" fill "cyan" ink "black" square left tail>>
-<<speaker "$p.name" fill "$p.eyes.color" ink "black" square left tail>>
+<<speaker "You" fill "$p.eyes.color" ink "black" square left tail>>
+<<speaker "Raphael" fill "#57188c" text "white" ink "white" circle notail>>
 
 <<set $p.eyes to {
-color: ""
+color: "#4dd089"
 }>>
 <<set $p.hair to {
 color: ""
 }>>
+<<set $p.pronouns to ["he/him", "she/her", "they/them", "it/its"]>>
+<<set $p.gender to ["male", "female", "transwoman", "transman", "enby">> 
 
 <<set $p.ptraits to {
 cynical: false,
@@ -46,6 +49,7 @@ ambivert: false
 hands: "human",
 eyes: "human",
 head: "human",
+nose: "human",
 face: "human",
 hair: "human",
 arms: "human"
@@ -61,16 +65,17 @@ vag: false
 cock: false
 testes: false
 ass: "human"
+tail: "kitsune"
 }>>
 
 :: Start
 
-<img href="https://freeimage.host/i/o2b6e1a"><img src="https://iili.io/o2b6e1a.md.png" alt="banner-JITA-source.png" border="0" width="100%" height="25%"></a>
-<br>
+<img src="./media/img/icon/JITA-banner-source.png" alt="Starry sky banner with the Journey Into The Astralscapes followers (A kitsune and an angel) and a moon." width="85%" height="20%">
+
 <<button "Disclaimers">><<run UI.alert("This is an adult game intended to be played by adults- that said, you can skip the content that is for adults if you are younger than 18 or you don't want to see it using the skip button and content settings as is appropriate. Summaries are usually given as needed, so you don't lose the essence of what happened nor what was said.")>><</button>>
 {{Start|Crossover}}
 {{About}}
-<<button "Settings">><<run UI.settings()>><</link>>
+<<button "Settings">><<run UI.settings()>><</button>>
 
 :: About [markdown]
 
@@ -79,6 +84,20 @@ ass: "human"
 This game does have complicated, sometimes mature themes as well as scenes, and that is something that those who may not be an adult yet may not want to experience. The disclaimer here is this: Skip what you like. Don't feel the need to see or look at something that you'd rather not see. The skip button is there for a good reason, and so are the skip summaries. 
 Fair warning: Characters in this game will have their own preferences, just like the player, and that may offend some. I'm not here to say *"yes you can"* to everything the player *wants* to do. **This world is alive...** or it's meant to be written that way, anyway. 
 
-I hope you enjoy playing it as much as we+ did writing it!
+I hope you enjoy playing it (and modding it, if you want) as much as we+ did writing it!
 
 {{Back|Start}}
+
+:: StoryTitle
+
+Journey Through The Astralverse
+
+:: StoryData
+
+{
+ "ifid": "1C9D9B70-70BF-44C0-AB4B-906C0850CEB7"
+}
+
+:: StorySubtitle
+
+**A game where you make the ending.**
