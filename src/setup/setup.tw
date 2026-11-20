@@ -9,12 +9,16 @@ muscular: false
 }>>
 <<set $cel to {
 HP: 30,
-MP: 60
+MP: 60,
+form: "Kitsune"
 }>>
 
-<<speaker "Celeste" fill "cyan" ink "black" square left tail>>
-<<speaker "You" fill "$p.eyes.color" ink "black" square left tail>>
-<<speaker "Raphael" fill "#57188c" text "white" ink "white" circle notail>>
+<<speaker "Celeste_F" "https://git.gay/Techy-Nest/Journey_Through_the_Astralverse/raw/branch/main/exports/media/img/Celeste/Cel_Fairy_Speech.png" fill "cyan" ink "black" square left tail>>
+<<speaker "Celeste_K" "https://git.gay/Techy-Nest/Journey_Through_the_Astralverse/raw/branch/main/exports/media/img/Celeste/Cel_Kitsune_Speech.png" fill "cyan" ink "black" square left tail>>
+<<speaker "Celeste_KH" "https://git.gay/Techy-Nest/Journey_Through_the_Astralverse/raw/branch/main/exports/media/img/Celeste/Cel_KitsuneHybrid_Speech.png" fill "cyan" ink "black" square left tail>>
+<<speaker "Celeste_FH" "https://git.gay/Techy-Nest/Journey_Through_the_Astralverse/raw/branch/main/exports/media/img/Celeste/Cel_FairyHybrid_Speech.png" fill "cyan" ink "black" square left tail>>
+<<speaker "You" "player" fill "$p.eyes.color" ink "black" square left tail>>
+<<speaker "Raphael" "https://git.gay/Techy-Nest/Journey_Through_the_Astralverse/raw/branch/main/exports/media/img/Bryan/Bryan-Speech.png" fill "#57188c" text "white" ink "white" circle right tail>>
 
 <<set $p.eyes to {
 color: "#4dd089"
@@ -52,6 +56,7 @@ head: "human",
 nose: "human",
 face: "human",
 hair: "human",
+ears: "kitsune"
 arms: "human"
 fwings: false,
 drakowings: false,
@@ -70,7 +75,7 @@ tail: "kitsune"
 
 :: Start
 
-<img src="./media/img/icon/JITA-banner-source.png" alt="Starry sky banner with the Journey Into The Astralscapes followers (A kitsune and an angel) and a moon." width="85%" height="20%">
+<img src="https://git.gay/Techy-Nest/Journey_Through_the_Astralverse/raw/branch/main/exports/media/img/icon/JTTA-banner-source.png" alt="Starry sky banner with the Journey Into The Astralscapes followers (A kitsune and an angel) and a moon." width="85%" height="20%">
 
 <<button "Disclaimers">><<run UI.alert("This is an adult game intended to be played by adults- that said, you can skip the content that is for adults if you are younger than 18 or you don't want to see it using the skip button and content settings as is appropriate. Summaries are usually given as needed, so you don't lose the essence of what happened nor what was said.")>><</button>>
 {{Start|Crossover}}
