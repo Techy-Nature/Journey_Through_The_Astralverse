@@ -17,7 +17,7 @@ form: "Kitsune"
 <<speaker "Celeste_K" "https://git.gay/Techy-Nest/Journey_Through_the_Astralverse/raw/branch/main/exports/media/img/Celeste/Cel_Kitsune_Speech.png" fill "cyan" ink "black" square left tail>>
 <<speaker "Celeste_KH" "https://git.gay/Techy-Nest/Journey_Through_the_Astralverse/raw/branch/main/exports/media/img/Celeste/Cel_KitsuneHybrid_Speech.png" fill "cyan" ink "black" square left tail>>
 <<speaker "Celeste_FH" "https://git.gay/Techy-Nest/Journey_Through_the_Astralverse/raw/branch/main/exports/media/img/Celeste/Cel_FairyHybrid_Speech.png" fill "cyan" ink "black" square left tail>>
-<<speaker "You" "player" fill "$p.eyes.color" ink "black" square left tail>>
+<<speaker "You" "player" fill $p.eyes.color ink "black" square left tail>>
 <<speaker "Raphael" "https://git.gay/Techy-Nest/Journey_Through_the_Astralverse/raw/branch/main/exports/media/img/Bryan/Bryan-Speech.png" fill "#57188c" text "white" ink "white" circle right tail>>
 
 <<set $p.eyes to {
@@ -26,8 +26,10 @@ color: "#4dd089"
 <<set $p.hair to {
 color: ""
 }>>
-<<set $p.pronouns to ["he/him", "she/her", "they/them", "it/its"]>>
-<<set $p.gender to ["male", "female", "transwoman", "transman", "enby">> 
+<<set $p.pronouns to ["he/him", "she/her", "they/them", "it/its", "ae/aer", "ey/em">>
+<<set $p.phystraits.gender to ["man", "woman", "transwoman", "transman", "nonbinary person"]>>
+<<set $p.gender to "">> 
+<<set $p.pn to "">>
 
 <<set $p.ptraits to {
 cynical: false,
@@ -37,7 +39,7 @@ experienced: false,
 prude: false,
 open: false,
 mute: false,
-selectively-mute: false,
+selectivelymute: false,
 confident: false,
 meek: false,
 dramatic: false,
@@ -46,7 +48,7 @@ humorous: false,
 autistic: false,
 introvert: false,
 extrovert: false,
-ambivert: false
+ambivert: false,
 }>>
 
 <<set $p.phystraitstypes to {
@@ -78,9 +80,10 @@ tail: "kitsune"
 <img src="https://git.gay/Techy-Nest/Journey_Through_the_Astralverse/raw/branch/main/exports/media/img/icon/JTTA-banner-source.png" alt="Starry sky banner with the Journey Into The Astralscapes followers (A kitsune and an angel) and a moon." width="85%" height="20%">
 
 <<button "Disclaimers">><<run UI.alert("This is an adult game intended to be played by adults- that said, you can skip the content that is for adults if you are younger than 18 or you don't want to see it using the skip button and content settings as is appropriate. Summaries are usually given as needed, so you don't lose the essence of what happened nor what was said.")>><</button>>
-{{Start|Crossover}}
+{{Start|You}}
 {{About}}
 <<button "Settings">><<run UI.settings()>><</button>>
+<<button "Load Game">><<run UI.saves()>><</button>>
 
 :: About [markdown]
 
@@ -103,6 +106,114 @@ Journey Through The Astralverse
  "ifid": "1C9D9B70-70BF-44C0-AB4B-906C0850CEB7"
 }
 
-:: StorySubtitle
+:: You [markdown]
 
-**A game where you make the ending.**
+## Character Creation
+
+Your name? <<textbox "(Your First Name)" "$p.name">> <<textbox "$p.surname" "(Your Surname)">>
+Pronouns? <<dropdown $p.pn>>
+<<options $p.pronouns[]>>
+<</dropdown>>
+
+When people describe you, what words do they use to do so? You may choose any combination.
+
+<label><<checkbox "$p.ptraits.kind" autocheck>> Kind</label>
+<label><<checkbox "$p.ptraits.cynical" autocheck>> Cynical</label>
+
+<label><<checkbox "$p.ptraits.innocent" autocheck>> Innocent</label>
+<label><<checkbox "$p.ptraits.experienced" autocheck>> Experienced</label>
+The above can change throughout your playthrough, this is just for the start. Over 25 different sensual scenes triggers Experienced "on" and Innocent "off"
+
+<label><<checkbox "$p.ptraits.prude">> Prude</label>
+<label><<checkbox "$p.ptraits.open">> Open-minded</label>
+
+<label><<checkbox "$p.ptraits.mute" autocheck>> Mute</label> ** Warning: This will remove your ability to speak!**
+<label><<checkbox "$p.ptraits.kind" autocheck>> Selectively Mute</label> **Warning: This will remove your ability to speak from Sex and Battle Scenes!**
+
+<label><<checkbox "$p.ptraits.confident" autocheck>> Confident</label>
+<label><<checkbox "$p.ptraits.meek" autocheck>> Meek</label>
+
+<label><<checkbox "$p.ptraits.dramatic" autocheck>> Dramatic</label>
+<label><<checkbox "$p.ptraits.literal" autocheck>> Takes Things Literally</label>
+<label><<checkbox "$p.ptraits.humorous" autocheck>> Has a Sense of Humor</label>
+<label><<checkbox "$p.ptraits.autistic" autocheck>> Mentally Disabled/Autistic</label>
+
+<label><<checkbox "$p.ptraits.introvert" true autocheck>> Introverted</label>
+<label><<checkbox "$p.ptraits.extrovert" true autocheck>> Extroverted</label>
+<label><<checkbox "$p.ptraits.ambivert" true autocheck>> Ambiverted</label>
+
+### Your Gender
+
+What do you describe yourself as?
+
+<<dropdown "$p.gender">>
+<<options $p.phystraits.gender[]>>
+<</dropdown>>
+
+Are you heavily muscled? 
+<<cycle "$p.muscles">>
+<<option "Yes." true>>
+<<option "No." false>>
+<</cycle>>
+
+{{Next|Your Physicality}}
+
+:: Your Physicality
+
+When you look at yourself, you see...
+
+<div data-portrait-builder></div>
+
+How blind are you?
+<<dropdown $p.phystraits.blind>>
+<<option "false" "I'm not blind at all.">>
+<<option "near-sighted">>
+<<option "far-sighted">>
+<<option "colorblind" "colorblind only">>
+<<option "slightblur" "everything is slightly blurry">>
+<<option "fairlyblurry" "everything is fairly blurry">>
+<<option "veryblurry" "everything is very blurry">>
+<<option "shapesonly" "I can't see anything crisply, only shapes">>
+<<option "vague-outlines" "I can only see light and vague outlines">>
+<<option "colorblind-blur" "I am colorblind and everything is incredibly blurry">>
+<<option "onlylight+dark" "I can only see light and darkness">>
+<<option "true" "I am completely blind">>
+<</dropdown>>
+
+{{Is this really me?|Confirm}}
+
+:: Confirm 
+
+Is this what and who you are?
+
+Name: $p.name $p.surname
+Heavy Musculature: <<= $p.muscles>>
+
+cynical: $p.ptraits.cynical
+kind: $p.ptraits.kind
+innocent: $p.ptraits.innocent
+experienced: $p.ptraits.experienced
+prude: $p.ptraits.prude
+open-minded: $p.ptraits.open
+mute: $p.ptraits.mute
+selectively-mute: $p.ptraits.selevtivelymute
+confident: $p.ptraits.confident
+meek: $p.ptraits.meek
+dramatic: $p.ptraits.dramatic
+literal: $p.ptraits.literal
+humorous: $p.ptraits.humorous
+autistic: $p.ptraits.autistic
+introvert: $p.ptraits.introvert
+extrovert: $p.ptraits.extrovvert
+ambivert: $p.ptraits.ambivert
+
+Blind? <<= $p.phystraits.blind>>
+
+Gender? <<== $p.gender>>
+Pronouns? <<= $p.pn>>
+
+<div data-portrait-preview></div>
+
+<<speech "You" thought night notail>> [[This is me!|Crossover]]<</speech>>
+
+<<speech "You" thought night notail>> [[Wait a minute, go back.|You]]<</speech>>

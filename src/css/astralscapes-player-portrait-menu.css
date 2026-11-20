@@ -1,11 +1,93 @@
-.portrait-color-menu {
+/*
+ * Astralscapes player portrait builder (Duplex 1.10.0 edition)
+ * Put this whole file in a passage tagged "stylesheet" (Story Stylesheet).
+ * Colors follow Duplex's dark theme variables, with fallbacks.
+ */
+
+.portrait-builder {
+    --portrait-panel: var(--duplex-panel, #22252b);
+    --portrait-bg: var(--duplex-bg, #17191d);
+    --portrait-text: var(--duplex-text, #f1f3f5);
+    --portrait-muted: var(--duplex-muted, #aeb5bd);
+    --portrait-accent: var(--duplex-accent, #83c5be);
+    --portrait-line: color-mix(in srgb, var(--portrait-accent) 30%, transparent);
+
     display: grid;
-    gap: 1rem;
-    max-width: 42rem;
+    grid-template-columns: minmax(11rem, 17rem) minmax(0, 1fr);
+    gap: 1.25rem;
+    align-items: start;
+    margin: 1rem 0 1.5rem;
+    color: var(--portrait-text);
+}
+
+/* ---------- live preview ---------- */
+
+.portrait-preview {
+    position: sticky;
+    top: 1rem;
+    display: grid;
+    place-items: center;
+    aspect-ratio: 3 / 4;
+    overflow: hidden;
+    border: 1px solid var(--portrait-line);
+    border-radius: 0.9rem;
+    background:
+        radial-gradient(circle at 50% 35%,
+            color-mix(in srgb, var(--portrait-accent) 14%, var(--portrait-panel)),
+            var(--portrait-bg) 75%);
+}
+
+.portrait-preview canvas,
+.portrait-preview img,
+[data-portrait-preview] canvas,
+[data-portrait-preview] img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    object-fit: contain;
+}
+
+.portrait-preview-placeholder {
     padding: 1rem;
-    border: 1px solid currentColor;
-    border-radius: 0.75rem;
-    background: color-mix(in srgb, Canvas 94%, transparent);
+    color: var(--portrait-muted);
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+.portrait-preview:not(.is-empty) .portrait-preview-placeholder {
+    display: none;
+}
+
+/* A preview on its own: <div data-portrait-preview></div> */
+[data-portrait-preview]:not(.portrait-preview) {
+    width: min(14rem, 60%);
+    margin: 1rem auto;
+    aspect-ratio: 3 / 4;
+    overflow: hidden;
+    border: 1px solid color-mix(in srgb, var(--duplex-accent, #83c5be) 30%, transparent);
+    border-radius: 0.9rem;
+    background: var(--duplex-panel, #22252b);
+}
+
+/* ---------- the color menu ---------- */
+
+.portrait-color-menu {
+    --portrait-panel: var(--duplex-panel, #22252b);
+    --portrait-bg: var(--duplex-bg, #17191d);
+    --portrait-text: var(--duplex-text, #f1f3f5);
+    --portrait-muted: var(--duplex-muted, #aeb5bd);
+    --portrait-accent: var(--duplex-accent, #83c5be);
+    --portrait-line: color-mix(in srgb, var(--portrait-accent) 30%, transparent);
+
+    display: grid;
+    gap: 0.9rem;
+    min-width: 0;
+    padding: 1rem;
+    color: var(--portrait-text);
+    border: 1px solid var(--portrait-line);
+    border-radius: 0.9rem;
+    background: var(--portrait-panel);
 }
 
 .portrait-color-menu h3,
@@ -13,14 +95,19 @@
     margin: 0;
 }
 
+.portrait-color-menu h3 {
+    font-size: 1.15rem;
+}
+
 .portrait-color-control {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
-    gap: 0.75rem;
+    gap: 0.7rem;
+    min-width: 0;
     margin: 0;
-    padding: 0.8rem;
-    border: 1px solid color-mix(in srgb, currentColor 35%, transparent);
-    border-radius: 0.5rem;
+    padding: 0.75rem 0.85rem 0.85rem;
+    border: 1px solid var(--portrait-line);
+    border-radius: 0.6rem;
+    background: color-mix(in srgb, var(--portrait-bg) 55%, var(--portrait-panel));
 }
 
 .portrait-color-control legend {
@@ -28,50 +115,133 @@
     font-weight: 700;
 }
 
-.portrait-color-control label {
-    display: grid;
-    gap: 0.3rem;
+/* Preset swatches */
+.portrait-swatches {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
 }
 
-.portrait-color-control select,
-.portrait-color-control input[type="text"],
-.portrait-color-reset {
-    min-height: 2.5rem;
-    padding: 0.45rem 0.6rem;
-    color: inherit;
-    border: 1px solid currentColor;
-    border-radius: 0.35rem;
-    background: Canvas;
+.portrait-color-menu .portrait-swatch {
+    width: 2.4rem;
+    height: 2.4rem;
+    padding: 0;
+    border: 2px solid color-mix(in srgb, var(--portrait-text) 25%, transparent);
+    border-radius: 50%;
+    background: var(--swatch);
+    box-shadow: inset 0 0 0 2px var(--portrait-panel);
+    cursor: pointer;
+    transition: transform 0.12s ease, border-color 0.12s ease;
 }
 
+.portrait-color-menu .portrait-swatch:hover {
+    transform: scale(1.08);
+}
+
+.portrait-color-menu .portrait-swatch[aria-pressed="true"] {
+    border-color: var(--portrait-accent);
+    box-shadow:
+        inset 0 0 0 2px var(--portrait-panel),
+        0 0 0 2px color-mix(in srgb, var(--portrait-accent) 45%, transparent);
+}
+
+.portrait-color-menu .portrait-swatch:focus-visible,
+.portrait-color-menu input:focus-visible,
+.portrait-color-reset:focus-visible {
+    outline: 2px solid var(--portrait-accent);
+    outline-offset: 2px;
+}
+
+/* Free color picker + hex box */
 .portrait-custom-color {
-    display: grid;
-    grid-template-columns: auto minmax(8rem, 1fr);
-    gap: 0.75rem;
-    align-items: end;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem 1rem;
+    align-items: center;
 }
 
-.portrait-custom-color[hidden] {
-    display: none;
+.portrait-picker-label,
+.portrait-hex-label {
+    display: inline-flex;
+    gap: 0.5rem;
+    align-items: center;
+    color: var(--portrait-muted);
+    font-size: 0.9rem;
 }
 
 .portrait-custom-color input[type="color"] {
-    width: 4rem;
-    min-height: 2.5rem;
+    width: 3.25rem;
+    height: 2.4rem;
     padding: 0.15rem;
-    border: 1px solid currentColor;
-    border-radius: 0.35rem;
-    background: Canvas;
+    border: 1px solid var(--portrait-line);
+    border-radius: 0.45rem;
+    background: var(--portrait-bg);
     cursor: pointer;
+}
+
+.portrait-custom-color input[type="color"]::-webkit-color-swatch-wrapper {
+    padding: 0;
+}
+
+.portrait-custom-color input[type="color"]::-webkit-color-swatch {
+    border: 0;
+    border-radius: 0.3rem;
+}
+
+.portrait-custom-color input[type="color"]::-moz-color-swatch {
+    border: 0;
+    border-radius: 0.3rem;
+}
+
+.portrait-custom-color input[type="text"] {
+    width: 6.5rem;
+    min-height: 2.4rem;
+    padding: 0.35rem 0.6rem;
+    color: var(--portrait-text);
+    font: inherit;
+    font-family: ui-monospace, monospace;
+    font-size: 0.95rem;
+    border: 1px solid var(--portrait-line);
+    border-radius: 0.45rem;
+    background: var(--portrait-bg);
+}
+
+.portrait-custom-color input[type="text"]:invalid {
+    border-color: #ff8a8a;
+}
+
+.portrait-color-name {
+    color: var(--portrait-muted);
+    font-size: 0.85rem;
 }
 
 .portrait-color-reset {
     justify-self: start;
+    min-height: 2.5rem;
     cursor: pointer;
 }
 
 .portrait-color-status {
     min-height: 1.4em;
-    opacity: 0.85;
+    color: var(--portrait-muted);
+    font-size: 0.9rem;
 }
 
+/* ---------- phones and narrow tablets ---------- */
+
+@media (max-width: 650px) {
+    .portrait-builder {
+        grid-template-columns: 1fr;
+    }
+
+    .portrait-preview {
+        position: relative;
+        top: auto;
+        width: min(15rem, 70%);
+        justify-self: center;
+    }
+
+    .portrait-color-menu {
+        padding: 0.8rem;
+    }
+}
