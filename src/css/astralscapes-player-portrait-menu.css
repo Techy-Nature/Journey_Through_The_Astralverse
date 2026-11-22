@@ -1,5 +1,5 @@
 /*
- * Astralscapes player portrait builder (Duplex 1.10.0 edition)
+ * Astralscapes player portrait builder (Duplex 1.10.0 edition, v3)
  * Put this whole file in a passage tagged "stylesheet" (Story Stylesheet).
  * Colors follow Duplex's dark theme variables, with fallbacks.
  */
@@ -210,9 +210,39 @@
     border-color: #ff8a8a;
 }
 
+/* Live color reading: dot + name (tinted with the color) + hex/preset/tint */
 .portrait-color-name {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 0.55rem;
+    align-items: center;
     color: var(--portrait-muted);
     font-size: 0.85rem;
+}
+
+.portrait-color-dot {
+    flex: none;
+    width: 1.1rem;
+    height: 1.1rem;
+    border: 2px solid color-mix(in srgb, var(--portrait-text) 35%, transparent);
+    border-radius: 50%;
+}
+
+.portrait-color-label {
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+}
+
+.portrait-color-meta {
+    font-family: ui-monospace, monospace;
+    font-size: 0.8rem;
+}
+
+/* The trait's heading gets a small stripe of its current color */
+.portrait-color-control legend {
+    border-left: 0.3rem solid var(--trait-color, transparent);
+    padding-left: 0.45rem;
 }
 
 .portrait-color-reset {
@@ -225,6 +255,107 @@
     min-height: 1.4em;
     color: var(--portrait-muted);
     font-size: 0.9rem;
+}
+
+/* Hue / Saturation / Value / Tint sliders */
+.portrait-hsv {
+    display: grid;
+    gap: 0.55rem;
+}
+
+.portrait-slider {
+    display: grid;
+    grid-template-columns: 6.2rem minmax(0, 1fr) 3.2rem;
+    gap: 0.6rem;
+    align-items: center;
+    color: var(--portrait-muted);
+    font-size: 0.9rem;
+}
+
+.portrait-slider-value {
+    color: var(--portrait-text);
+    font-family: ui-monospace, monospace;
+    font-size: 0.85rem;
+    text-align: right;
+}
+
+.portrait-slider input[type="range"] {
+    --track: var(--portrait-line);
+    width: 100%;
+    height: 1.6rem;
+    margin: 0;
+    background: transparent;
+    cursor: pointer;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+.portrait-slider[class*="-hue"] input[type="range"] {
+    --track: linear-gradient(to right, #f00, #ff0, #0f0, #0ff, #00f, #f0f, #f00);
+}
+
+.portrait-slider[class*="-saturation"] input[type="range"] {
+    --track: linear-gradient(to right, var(--hsv-s0, #777), var(--hsv-s1, #f00));
+}
+
+.portrait-slider[class*="-value"] input[type="range"] {
+    --track: linear-gradient(to right, #000, var(--hsv-v1, #fff));
+}
+
+.portrait-slider[class*="-tint"] input[type="range"] {
+    --track: linear-gradient(to right,
+        color-mix(in srgb, var(--hsv-color, #888) 0%, var(--portrait-bg)),
+        var(--hsv-color, #888));
+}
+
+.portrait-slider input[type="range"]::-webkit-slider-runnable-track {
+    height: 0.75rem;
+    border: 1px solid color-mix(in srgb, var(--portrait-text) 20%, transparent);
+    border-radius: 999px;
+    background: var(--track);
+}
+
+.portrait-slider input[type="range"]::-moz-range-track {
+    height: 0.75rem;
+    border: 1px solid color-mix(in srgb, var(--portrait-text) 20%, transparent);
+    border-radius: 999px;
+    background: var(--track);
+}
+
+.portrait-slider input[type="range"]::-webkit-slider-thumb {
+    width: 1.35rem;
+    height: 1.35rem;
+    margin-top: -0.35rem;
+    border: 3px solid var(--portrait-text);
+    border-radius: 50%;
+    background: var(--hsv-color, var(--portrait-accent));
+    box-shadow: 0 0 0 1px #000a;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+.portrait-slider input[type="range"]::-moz-range-thumb {
+    width: 1.1rem;
+    height: 1.1rem;
+    border: 3px solid var(--portrait-text);
+    border-radius: 50%;
+    background: var(--hsv-color, var(--portrait-accent));
+    box-shadow: 0 0 0 1px #000a;
+}
+
+.portrait-slider input[type="range"]:focus-visible {
+    outline: 2px solid var(--portrait-accent);
+    outline-offset: 2px;
+}
+
+/*
+ * The "You" speaker bubble follows the player's eye color.
+ * Remove `fill $p.eyes.color` from the <<speaker "You" ...>> line so this can work,
+ * and change "You" here if your player speaker has another name.
+ */
+.duplex-speech[data-speaker="You"] {
+    --duplex-speech-fill: var(--player-eyes-color, #a8fbff);
+    --duplex-speech-text: var(--player-eyes-text, #121417);
 }
 
 /* ---------- phones and narrow tablets ---------- */
@@ -243,5 +374,19 @@
 
     .portrait-color-menu {
         padding: 0.8rem;
+    }
+
+    .portrait-color-control {
+        padding: 0.65rem 0.65rem 0.75rem;
+    }
+
+    .portrait-slider {
+        grid-template-columns: 1fr auto;
+        row-gap: 0.15rem;
+    }
+
+    .portrait-slider input[type="range"] {
+        grid-column: 1 / -1;
+        grid-row: 2;
     }
 }

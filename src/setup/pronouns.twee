@@ -1,0 +1,123 @@
+:: Pronoun Script [script]
+/* ============================================================
+   Player pronouns for Duplex
+   - reads the player's choice from $p.pn ("he/him", "they/them", ...)
+   - falls back to they/them while $p.pn is "" or unknown
+   - adds pronoun and verb macros that use the same casing as the
+     [grammar] word lists:
+        <<they>>            -> they / he / ae ...
+        <<they.upperFirst>> -> They / He / Ae ...
+        <<they.upper>>      -> THEY / HE / AE ...
+        <<they.lower>>      -> they / he / ae ...
+   - JavaScript: setup.pn.word("they.upperFirst"), or Grammar.pick("they.upper")
+   ============================================================ */
+setup.pn = (function () {
+  'use strict';
+
+  /* ---------- Settings you can change ---------- */
+  var FALLBACK = 'they/them';   // used while $p.pn is "" or not in the table
+
+  /* ---------- The pronoun table ----------
+     Key = the text stored in $p.pn (case and spaces do not matter).
+     plural: true  -> "they are / they have / they walk"
+     plural: false -> "he is / he has / he walks"
+     To add a set, copy a line and change it. To use "themself" instead of
+     "themselves", change it on the they/them line.                        */
+  var TABLE = {
+    'he/him':    { they: 'he',   them: 'him',  their: 'his',   theirs: 'his',    themselves: 'himself',    plural: false },
+    'she/her':   { they: 'she',  them: 'her',  their: 'her',   theirs: 'hers',   themselves: 'herself',    plural: false },
+    'they/them': { they: 'they', them: 'them', their: 'their', theirs: 'theirs', themselves: 'themselves', plural: true  },
+    'it/its':    { they: 'it',   them: 'it',   their: 'its',   theirs: 'its',    themselves: 'itself',     plural: false },
+    'ae/aer':    { they: 'ae',   them: 'aer',  their: 'aer',   theirs: 'aers',   themselves: 'aerself',    plural: false },
+    'ey/em':     { they: 'ey',   them: 'em',   their: 'eir',   theirs: 'eirs',   themselves: 'emself',     plural: false }
+  };
+
+  /* ---------- Verb helpers: [singular, plural] ---------- */
+  var VERBS = {
+    is:     ['is', 'are'],       are:    ['is', 'are'],
+    isnt:   ["isn't", "aren't"], arent:  ["isn't", "aren't"],
+    was:    ['was', 'were'],     were:   ['was', 'were'],
+    wasnt:  ["wasn't", "weren't"], werent: ["wasn't", "weren't"],
+    has:    ['has', 'have'],     have:   ['has', 'have'],
+    hasnt:  ["hasn't", "haven't"], havent: ["hasn't", "haven't"],
+    does:   ['does', 'do'],      'do':   ['does', 'do'],
+    doesnt: ["doesn't", "don't"], dont:  ["doesn't", "don't"],
+    s:      ['s', ''],           /* walk<<s>>  -> walks / walk */
+    es:     ['es', '']           /* push<<es>> -> pushes / push */
+  };
+
+  /* ---------- Contractions: subject + ending ---------- */
+  var CONTRACTIONS = {
+    theyre: ["'s", "'re"],   /* he's / they're   */
+    theyve: ["'s", "'ve"],   /* he's / they've   */
+    theyll: ["'ll", "'ll"],  /* he'll / they'll  */
+    theyd:  ["'d", "'d"]     /* he'd / they'd    */
+  };
+
+  var FORMS = ['they', 'them', 'their', 'theirs', 'themselves'];
+  var ALIASES = { themself: 'themselves' };
+
+  function clean(value) {
+    return String(value == null ? '' : value).toLowerCase().replace(/\s+/g, '');
+  }
+
+  function choice() {
+    var p = State.variables.p;
+    return p && typeof p === 'object' ? p.pn : '';
+  }
+
+  /* The table entry for $p.pn, or for the fallback. */
+  function current() {
+    var key = clean(choice());
+    if (TABLE[key]) return TABLE[key];
+    /* "he" or "he/him/his" still find "he/him" */
+    var first = key.split('/')[0];
+    for (var name in TABLE) if (name.split('/')[0] === first && first) return TABLE[name];
+    return TABLE[clean(FALLBACK)] || TABLE['they/them'];
+  }
+
+  function caseText(text, style) {
+    style = clean(style);
+    if (style === 'upper') return text.toUpperCase();
+    if (style === 'lower') return text.toLowerCase();
+    if (style === 'upperfirst') return text.replace(/\p{L}/u, function (l) { return l.toUpperCase(); });
+    return text;
+  }
+
+  /* setup.pn.word("they"), setup.pn.word("they.upperFirst"), setup.pn.word("are", "upper") */
+  function word(name, style) {
+    name = String(name == null ? '' : name).trim();
+    var dot = name.indexOf('.');
+    if (dot > 0) { style = style || name.slice(dot + 1); name = name.slice(0, dot); }
+    name = clean(name);
+    name = ALIASES[name] || name;
+    var set = current(), text;
+    if (FORMS.indexOf(name) >= 0) text = set[name];
+    else if (VERBS[name]) text = VERBS[name][set.plural ? 1 : 0];
+    else if (CONTRACTIONS[name]) text = set.they + CONTRACTIONS[name][set.plural ? 1 : 0];
+    else { console.warn('setup.pn: no pronoun word called "' + name + '".'); return ''; }
+    return caseText(text, style);
+  }
+
+  /* Register every word as a one-option grammar list, so <<they.upper>>,
+     <<grammar "they" upperFirst>> and Grammar.pick("they.upper") all work
+     exactly like the random word lists. */
+  var names = FORMS.concat(Object.keys(ALIASES), Object.keys(VERBS), Object.keys(CONTRACTIONS));
+  names.forEach(function (name) {
+    Grammar.define(name, ['<<print setup.pn.word("' + name + '")>>']);
+  });
+
+  return {
+    word: word,
+    current: function () { var set = current(), copy = {}; for (var k in set) copy[k] = set[k]; return copy; },
+    plural: function () { return current().plural; },
+    /* setup.pn.set("he/him") is the same as <<set $p.pn to "he/him">> */
+    set: function (value) {
+      var vars = State.variables;
+      if (!vars.p || typeof vars.p !== 'object') vars.p = {};
+      vars.p.pn = String(value == null ? '' : value);
+    },
+    table: TABLE,
+    names: names
+  };
+}());

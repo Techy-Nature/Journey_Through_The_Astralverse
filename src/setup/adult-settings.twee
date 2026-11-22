@@ -114,6 +114,7 @@ document.addEventListener('change', function (event) {
 :: Adult widgets [widget]
 <<widget "adult" container>><<if setup.adult.on()>>_contents<</if>><</widget>>
 <<widget "notadult" container>><<if !setup.adult.on()>>_contents<</if>><</widget>>
+<<widget "teen" container>><<if !setup.adult.on()>>_contents<</if>><</widget>>
 
 
 :: StorySettings
@@ -134,13 +135,14 @@ document.addEventListener('change', function (event) {
 :: Age Check
 <div class="age-check">
 <h2>Before you begin</h2>
-<p>Journey Into The Astralscapes has optional adult content, including sexual scenes. You can change this later in Settings.</p>
+<p>Journey Through The Astralscapes has optional adult content, including sexual scenes. You can change this later in Settings.</p>
 <p>How old are you?</p>
 <<link "I'm 18 or older. Show adult content." "Start">><<run setup.adult.answer(true, true)>><</link>>
 <<link "I'm 18 or older. Keep adult content off." "Start">><<run setup.adult.answer(true, false)>><</link>>
 <<link "I'm under 18." "Start">><<run setup.adult.answer(false, false)>><</link>>
 </div>
-
+<br>
+You still need to be 13+ to play this game, as that is the age of consent.
 
 :: Story Stylesheet [stylesheet]
 .age-check { max-width: 34em; margin: 2em auto; }

@@ -1,4 +1,4 @@
-:: Crossover
+:: Crossover [markdown]
 
 You gasp awake to cold licking to the face. Something thuds to the ground behind whatever is licking you, and the creature in front of you steps back, meekly bowing their head. You.. blink when your bleary eyes end up not clearing. You keep blinking them.. 
 
@@ -6,15 +6,15 @@ You gasp awake to cold licking to the face. Something thuds to the ground behind
 
 Whoever thudded to the ground earlier comes closer and wipes off the slickness with his feather-gloved hand. You're.. still in shock at the fox talking, let alone- whoever or whatever this is! A winged angel? 
 
-<<speech "You">>...Did I die and go to heaven?<</speech>>
+<<if !$p.ptraits.mute>><<speech "You">>...Did I die and go to heaven?<</speech>><<elseif $p.ptaits.mute is true>>You look around curiously, then look at the two beings for answers.<</if>>
 
-<<speech "Raphael">>You.. aren't quite there yet. It seems you aren't a pureblood, and before I could reap your soul and take it to heaven, this Kitsune interfered...<</speech>>
+<<speech "Bryan">>You.. aren't quite there <<if $p.ptraits.mute is true>>in an afterlife<</if>> yet. It seems you aren't a pureblood, and before I could reap your soul and take it to heaven, this Kitsune interfered...<</speech>>
 
 <<speech "Celeste_K">>Maybe let this one choose where they want to go before anything else? We're in a safe pocket dimension for now, it's not as if we don't have the time.<</speech>>
 
-<<speech "Raphael">>...Very well.<</speech>>
+<<speech "Bryan">>...Very well.<</speech>>
 
-While these two were bickering on, you seem to have come at an impass.. Do you [[tbink about it|Contemplate]], [[ask more questions|Inquiry]], or do you answer right away?
+While these two were bickering on, you seem to have come at an impass.. Do you [[tbink about it|Contemplate]], <<if !$p.ptraits.mute>>[[ask more questions|Inquiry]],<</if>> or do you answer right away?
 
 {{Kitsune}}
 
@@ -30,8 +30,23 @@ While these two were bickering on, you seem to have come at an impass.. Do you [
 
 :: Inquiry
 
+<<speech "You">> I have some questions.<</speech>>
+<br> 
+<<if $p.phystraits.blind is true>>The silence worries you just a bit.<<else>>The two of them look at you with curiosity.<</if>>
+
+<<speech "Celeste_K">>Go ahead!<</speech>>
+<br>
+<<if $p.phystraits.blind is true or $p.phystraits.blind is "only-light+dark">>She says it kindly and with interest, that much you can tell for sure.<<else>> She says it with interest and a slightly tilted head, adorably enough.<</if>>
+
+<<if $p.ptraits.kind is false>><<speech "You">>[[Who even are you two?|Who are you?]]<</speech>><<elseif $p.ptraits.kind is true>><<speech "You">>[[I'm sorry, but I don't think I got either of your names. Can you introduce yourselves and I'll do the same after?|Who are you?]]<</speech>>
 
 
-::Contemplate
+:: Contemplate
 
-You think about... (TBW)
+ You sit there and look around at your surroundings. It feels fairly generic, like this forest isn't real. Or.. at least is less real than some areas. The trees sway in the slight wind, and you enjoy the sounds. Then the angel clears his throat, and talks to the fox seemingly silently after a moment.  You can see his lips moving, but there seems to be some kind of magic afoot. You study it, and notice it's some kind of.. barrier? or maybe a cloak. It's making it harder to hear them, in any case.
+
+You turn your attention from them, and look about. It seems the forest ends about 10 armspans in, and turns into something even more generic- a beach, and then glassy water makes further traversal impossible. You can see it from here, surprisingly, given that there's not much underbrush. You blink when the magick cloak pops with a sound that's a bit hard to describe, and turn back towards the two of them.
+
+<<speech "Bryan">>Have you made up your mind yet?<</speech>>
+
+<<if $p.ptraits.mute is false>><<speech "You">> [[No. I still have questions.|Inquiry]]<</speech>><<else>>You shake your head emphatically. <<speech "You" thought night dotted circle>>I seriously wish I knew more of what's going on here...<</speech>>You sigh, and think some more, studying the beings who woke you... They both seem fairly relaxed, though the kitsune is bouncing with an energy you wish you had.<</if>>
